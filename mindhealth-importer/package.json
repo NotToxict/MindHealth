@@ -1,0 +1,21 @@
+{
+    "name": "mindhealth-importer",
+    "version": "1.0.0",
+    "description": "Script para importar datos a Firestore",
+    "main": "import-script.js",
+    "type": "module",
+    "scripts": {
+      "start": "node import-script.js"
+    },
+    "keywords": [
+      "firebase",
+      "firestore",
+      "import"
+    ],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "firebase-admin": "^12.1.1"
+    }
+  }
+  

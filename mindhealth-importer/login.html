@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindHealth - Iniciar Sesión / Registrarse</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> </head>
+<body class="antialiased bg-slate-100 text-slate-800 flex items-center justify-center min-h-screen">
+
+    <div class="content-card max-w-md w-full p-8 space-y-6 text-center shadow-lg rounded-lg">
+        <h1 class="text-3xl font-bold text-slate-900 mb-4">MindHealth</h1>
+        <h2 class="text-xl font-semibold text-slate-800">Acceso a Autoevaluación</h2>
+        <p class="text-slate-600">Inicia sesión o regístrate para acceder a tu historial y comenzar una nueva evaluación.</p>
+
+        <form id="auth-form" class="space-y-4 mt-6">
+            <div>
+                <label for="email" class="block text-sm font-medium text-slate-700 text-left">Correo Electrónico:</label>
+                <input type="email" id="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2" required>
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-slate-700 text-left">Contraseña:</label>
+                <input type="password" id="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2" required>
+            </div>
+            <button type="submit" id="login-button" class="w-full action-button">Iniciar Sesión</button>
+            <button type="button" id="register-button" class="w-full secondary-button">Registrarse</button>
+            <p id="auth-error-message" class="text-red-500 text-center text-sm hidden"></p>
+        </form>
+
+        <p class="text-sm text-slate-500 mt-6">
+            <a href="index.html" class="text-blue-600 hover:underline">Volver a la página principal</a>
+        </p>
+    </div>
+
+    <script type="module">
+        import { auth, waitForAuthReady } from './firebase-config.js';
+        import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const authForm = document.getElementById('auth-form');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const registerButton = document.getElementById('register-button');
+            const authErrorMessage = document.getElementById('auth-error-message');
+
+            // Espera la restauración de sesión antes de decidir redirigir
+            await waitForAuthReady();
+
+            const params = new URLSearchParams(location.search);
+            const from = params.get('from') || 'self-assessment.html';
+
+            let didRedirect = false;
+            const safeRedirect = () => {
+                if (didRedirect) return;
+                didRedirect = true;
+                // Evita bucles navegando en el historial
+                window.location.replace(from);
+            };
+
+            // Si el usuario ya está autenticado, redirige
+            onAuthStateChanged(auth, (user) => {
+                if (user) safeRedirect();
+            });
+
+            if (authForm) {
+                authForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const email = emailInput.value.trim();
+                    const password = passwordInput.value;
+                    authErrorMessage?.classList.add('hidden');
+                    try {
+                        await signInWithEmailAndPassword(auth, email, password);
+                        // Redirige inmediatamente tras login exitoso
+                        safeRedirect();
+                    } catch (error) {
+                        if (authErrorMessage) {
+                            authErrorMessage.textContent = `Error al iniciar sesión: ${error.message}`;
+                            authErrorMessage.classList.remove('hidden');
+                        }
+                        console.error("Error al iniciar sesión:", error);
+                    }
+                });
+            }
+
+            if (registerButton) {
+                registerButton.addEventListener('click', async () => {
+                    const email = emailInput.value.trim();
+                    const password = passwordInput.value;
+                    authErrorMessage?.classList.add('hidden');
+                    try {
+                        await createUserWithEmailAndPassword(auth, email, password);
+                        // Redirige tras registro exitoso
+                        safeRedirect();
+                    } catch (error) {
+                        if (authErrorMessage) {
+                            authErrorMessage.textContent = `Error al registrarse: ${error.message}`;
+                            authErrorMessage.classList.remove('hidden');
+                        }
+                        console.error("Error al registrarse:", error);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

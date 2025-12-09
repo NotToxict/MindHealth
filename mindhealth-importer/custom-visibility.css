@@ -1,0 +1,6 @@
+/* custom-visibility.css */
+
+/* Clase para ocultar elementos que será controlada exclusivamente por JavaScript */
+.js-hide {
+    display: none !important; /* ¡Importante para anular cualquier otra regla de display! */
+}

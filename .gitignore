@@ -1,0 +1,11 @@
+# Archivos de sistema y dependencias
+node_modules/
+mindhealth-importer/node_modules/
+.env
+*.log
+
+# Archivos de seguridad (CLAVE PRIVADA)
+serviceAccountKey.json
+
+# Dataset pesado (Demasiado grande para GitHub)
+Entrenamiento/fer2013.csv

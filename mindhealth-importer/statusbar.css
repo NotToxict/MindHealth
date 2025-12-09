@@ -1,0 +1,199 @@
+/* Barra de estado estilo iOS/Samsung con cara animada centrada */
+:root{
+  --ok: #10b981;        /* emerald-500 */
+  --warn: #f59e0b;      /* amber-500 */
+  --bad: #ef4444;       /* rose-500 */
+  --track: #e5e7eb;     /* slate-200 */
+  --ink: #0f172a;       /* slate-900 */
+  --face-bg: #ffffff;
+  --shadow: 0 6px 20px rgba(2,6,23,.08), 0 2px 6px rgba(2,6,23,.06);
+}
+
+.ios-statusbar{
+  position: relative;
+  padding: 20px 8px 8px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,.8), rgba(255,255,255,.6));
+  border: 1px solid rgba(2,6,23,.06);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+}
+
+.ios-statusbar__track{
+  position: relative;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--track);
+  overflow: hidden;
+}
+
+.ios-statusbar__fill{
+  --pct: 0%;
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--pct);
+  background: linear-gradient(90deg, var(--ok) 0%, var(--warn) 50%, var(--bad) 100%);
+  border-radius: 999px;
+  transition: width 500ms cubic-bezier(.2,.8,.2,1);
+  box-shadow: inset 0 0 10px rgba(255,255,255,.35);
+}
+
+/* Etiquetas bajo la barra */
+.ios-statusbar__labels{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  font-size: 11px;
+  color: #475569;
+  margin-top: 8px;
+}
+.ios-statusbar__labels span{
+  text-align: center;
+}
+
+/* Cara */
+.face{
+  --size: 64px;
+  position: absolute;
+  left: 50%;
+  top: -8px;
+  transform: translate(-50%, -50%);
+  width: var(--size);
+  height: var(--size);
+  background: radial-gradient(120% 120% at 30% 20%, #fff, #f8fafc);
+  border-radius: 999px;
+  border: 1px solid rgba(2,6,23,.06);
+  box-shadow: var(--shadow);
+}
+.face::before{
+  /* brillo superior */
+  content: "";
+  position: absolute;
+  inset: 2px 2px auto 2px;
+  height: 40%;
+  border-radius: 999px 999px 40% 40%;
+  background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,0));
+  pointer-events: none;
+}
+.face::after{
+  /* sombra inferior */
+  content: "";
+  position: absolute;
+  inset: auto 8px 6px 8px;
+  height: 8px;
+  filter: blur(8px);
+  background: rgba(2,6,23,.06);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Ojos y boca hechos con pseudo-elementos para alto rendimiento */
+.face,
+.face::part(eye),
+.face::part(mouth){ isolation: isolate; }
+
+.face .eye, .face .mouth { position: absolute; }
+
+/* Ojos */
+.face .eye{
+  width: 10px; height: 10px;
+  background: var(--ink);
+  border-radius: 50%;
+  top: 40%;
+  animation: blink 6s infinite;
+  transform-origin: center;
+}
+.face .eye.left { left: 22px; }
+.face .eye.right{ right: 22px; animation-delay: 2.4s; }
+
+@keyframes blink{
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+  97% { transform: scaleY(1); }
+}
+
+/* Boca base (neutral) */
+.face .mouth{
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 18px;
+  width: 28px; height: 6px;
+  background: var(--ink);
+  border-radius: 999px;
+}
+
+/* EMOCIONES (se cambian por data-emotion en el elemento) */
+.face[data-emotion="happy"] .mouth{
+  width: 34px; height: 16px;
+  background: transparent;
+  border: 4px solid var(--ink);
+  border-top: none;
+  border-radius: 0 0 40px 40px;
+  bottom: 14px;
+}
+.face[data-emotion="happy"] .eye{
+  transform: scaleY(0.6);
+}
+
+.face[data-emotion="sad"] .mouth{
+  width: 30px; height: 16px;
+  background: transparent;
+  border: 4px solid var(--ink);
+  border-bottom: none;
+  border-radius: 40px 40px 0 0;
+  bottom: 10px;
+}
+.face[data-emotion="sad"] .eye{
+  transform: translateY(2px);
+  opacity: .9;
+}
+
+.face[data-emotion="anxious"] .mouth{
+  width: 14px; height: 14px;
+  background: transparent;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  bottom: 16px;
+  animation: tremble 1.5s infinite ease-in-out;
+}
+.face[data-emotion="anxious"] .eye{
+  transform: scale(0.9);
+  animation: blink 4s infinite;
+}
+
+@keyframes tremble{
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  25% { transform: translateX(calc(-50% + 1px)) translateY(0.5px); }
+  50% { transform: translateX(calc(-50% - 1px)) translateY(-0.5px); }
+  75% { transform: translateX(calc(-50% + 0.5px)) translateY(0.5px); }
+}
+
+.face[data-emotion="angry"] .eye.left{
+  transform: rotate(15deg) translateY(-1px);
+  width: 12px; height: 8px; border-radius: 999px;
+}
+.face[data-emotion="angry"] .eye.right{
+  transform: rotate(-15deg) translateY(-1px);
+  width: 12px; height: 8px; border-radius: 999px;
+}
+.face[data-emotion="angry"] .mouth{
+  width: 26px; height: 6px; background: var(--ink); border-radius: 2px/6px;
+  bottom: 16px;
+}
+
+.face[data-emotion="surprised"] .mouth{
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--ink);
+  bottom: 16px;
+}
+
+/* Animación sutil de flotación para la cara */
+@keyframes floaty{
+  0%,100% { transform: translate(-50%,-50%) translateY(0); }
+  50% { transform: translate(-50%,-50%) translateY(-2px); }
+}
+.ios-statusbar__face{ animation: floaty 4.5s ease-in-out infinite; }
+
+/* Acentos del borde de la cara según severidad (color halo) */
+.ios-statusbar[data-level="low"] .face { box-shadow: 0 0 0 4px rgba(16,185,129,0.15), var(--shadow); }
+.ios-statusbar[data-level="medium"] .face { box-shadow: 0 0 0 4px rgba(245,158,11,0.18), var(--shadow); }
+.ios-statusbar[data-level="high"] .face { box-shadow: 0 0 0 4px rgba(239,68,68,0.18), var(--shadow); }

@@ -1,0 +1,193 @@
+{
+    "general_prevalence": {
+      "summary": "Múltiples fuentes apuntan a una alta prevalencia en México, con una brecha de tratamiento significativa.",
+      "estimates": [
+        { "value": "3 de cada 10 personas desarrollarán un trastorno en su vida.", "source": "IMSS/Estimaciones Generales" },
+        { "value": "Aprox. el 17% de la población ha presentado al menos un trastorno en su vida.", "source": "Encuesta Nacional de Epidemiología Psiquiátrica" }
+      ],
+      "treatment_gap": {
+        "summary": "Una gran proporción de personas con un trastorno mental no recibe atención.",
+        "estimates": [
+          { "value": "2 de cada 3 personas no reciben ningún tipo de atención sanitaria.", "source": "Estimaciones generales" }
+        ]
+      }
+    },
+    "attended_services_ss_2024": {
+      "source": "Secretaría de Salud (Ene-Sep 2024)",
+      "breakdown_by_condition": [
+          { "condition": "Ansiedad", "percentage": 52.8, "gender_dist": { "women": 73.4, "men": 26.6 } },
+          { "condition": "Depresión", "percentage": 25.1, "gender_dist": { "women": 78.8, "men": 21.2 } },
+          { "condition": "Trastorno de Conducta", "percentage": 7.0, "gender_dist": { "women": 39.5, "men": 60.5 } },
+          { "condition": "TDAH", "percentage": 3.7, "gender_dist": { "women": 18.9, "men": 81.1 } },
+          { "condition": "Trastorno Psicótico (episodios)", "percentage": 2.6, "gender_dist": { "women": 45.6, "men": 39.2 } },
+          { "condition": "Trastornos del Desarrollo Intelectual", "percentage": 2.9, "gender_dist": { "women": 55.0, "men": 45.0 } },
+          { "condition": "Trastorno del Espectro Autista", "percentage": 1.8, "gender_dist": { "women": 22.2, "men": 77.8 } },
+          { "condition": "Estrés Postraumático", "percentage": 1.6, "gender_dist": { "women": 66.7, "men": 33.3 } },
+          { "condition": "Trastorno Bipolar", "percentage": 1.4, "gender_dist": { "women": 67.0, "men": 33.0 } },
+          { "condition": "Demencias", "percentage": 1.0, "gender_dist": { "women": 91.1, "men": 87.9 } }
+      ]
+    },
+    "mortality_data": {
+      "suicide_inegi_2023": {
+        "national_rate_per_100k": 6.8,
+        "gender_rate_per_100k": {
+          "men": 11.4,
+          "women": 2.5
+        },
+        "methods_by_gender": {
+          "men": [
+            { "method": "Ahorcamiento", "percentage": 85.5 },
+            { "method": "Arma de fuego", "percentage": 6.4 },
+            { "method": "Otros", "percentage": 8.1 }
+          ],
+          "women": [
+            { "method": "Ahorcamiento", "percentage": 84.7 },
+            { "method": "Envenenamiento", "percentage": 9.8 },
+            { "method": "Otros", "percentage": 5.5 }
+          ]
+        },
+        "by_state_all_rates": [
+          { "state": "Aguascalientes", "rate": 10.5 },
+          { "state": "Baja California", "rate": 7.2 },
+          { "state": "Baja California Sur", "rate": 8.1 },
+          { "state": "Campeche", "rate": 10.5 },
+          { "state": "Coahuila", "rate": 7.0 },
+          { "state": "Colima", "rate": 6.5 },
+          { "state": "Chiapas", "rate": 4.9 },
+          { "state": "Chihuahua", "rate": 15.0 },
+          { "state": "Ciudad de México", "rate": 3.4 },
+          { "state": "Durango", "rate": 7.5 },
+          { "state": "Guanajuato", "rate": 5.8 },
+          { "state": "Guerrero", "rate": 2.1 },
+          { "state": "Hidalgo", "rate": 5.3 },
+          { "state": "Jalisco", "rate": 6.9 },
+          { "state": "Estado de México", "rate": 4.8 },
+          { "state": "Michoacán", "rate": 6.1 },
+          { "state": "Morelos", "rate": 5.7 },
+          { "state": "Nayarit", "rate": 8.5 },
+          { "state": "Nuevo León", "rate": 7.8 },
+          { "state": "Oaxaca", "rate": 4.2 },
+          { "state": "Puebla", "rate": 4.5 },
+          { "state": "Querétaro", "rate": 7.3 },
+          { "state": "Quintana Roo", "rate": 9.1 },
+          { "state": "San Luis Potosí", "rate": 6.2 },
+          { "state": "Sinaloa", "rate": 7.0 },
+          { "state": "Sonora", "rate": 8.9 },
+          { "state": "Tabasco", "rate": 5.1 },
+          { "state": "Tamaulipas", "rate": 6.0 },
+          { "state": "Tlaxcala", "rate": 5.5 },
+          { "state": "Veracruz", "rate": 4.4 },
+          { "state": "Yucatán", "rate": 14.3 },
+          { "state": "Zacatecas", "rate": 9.5 }
+        ]
+      },
+      "suicide_trend_2013_2023": {
+        "source": "INEGI",
+        "data_by_year": [
+          { "year": 2013, "rate": 4.9 },
+          { "year": 2014, "rate": 5.0 },
+          { "year": 2015, "rate": 5.1 },
+          { "year": 2016, "rate": 5.1 },
+          { "year": 2017, "rate": 5.3 },
+          { "year": 2018, "rate": 5.3 },
+          { "year": 2019, "rate": 5.5 },
+          { "year": 2020, "rate": 5.9 },
+          { "year": 2021, "rate": 6.2 },
+          { "year": 2022, "rate": 6.4 },
+          { "year": 2023, "rate": 6.8 }
+        ]
+      }
+    },
+    "risk_factors_context_mexico": {
+      "socioeconomic": [
+        "Pobreza e Inequidad: La inseguridad financiera y falta de acceso a necesidades básicas.",
+        "Desempleo o Precariedad Laboral: Genera estrés crónico y desesperanza."
+      ],
+      "contextual": [
+        "Violencia y Trauma Comunitario: Exposición a la criminalidad y desastres naturales.",
+        "Condiciones de Vivienda Inadecuadas: Falta de acceso a espacios seguros."
+      ],
+      "cultural": [
+        "Estigma y Discriminación: Barreras para buscar ayuda profesional.",
+        "Familismo: Presión para ocultar problemas de salud mental dentro de la familia.",
+        "Falta de Redes de Apoyo Social: Aumenta la prevalencia de depresión.",
+        "Creencias Culturales: Pueden influir en la búsqueda de tratamiento (ej., curanderos)."
+      ]
+    },
+    "healthcare_system": {
+      "budget_as_percentage_of_health_spending": "1.3% - 1.6%",
+      "specialist_density_psychiatrists_per_10k": 0.36,
+      "treatment_gap": "2 de cada 3"
+    },
+    "disability_data_gbd_2021": {
+      "source": "Global Burden of Disease (GBD) 2021",
+      "by_state_avd_depression": [
+        { "state": "Aguascalientes", "rate": 850, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Baja California", "rate": 860, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Baja California Sur", "rate": 870, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Campeche", "rate": 940, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Chiapas", "rate": 750, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Chihuahua", "rate": 800, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Ciudad de México", "rate": 930, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Coahuila", "rate": 880, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Colima", "rate": 890, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Durango", "rate": 780, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Guanajuato", "rate": 820, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Guerrero", "rate": 770, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Hidalgo", "rate": 830, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Jalisco", "rate": 860, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Estado de México", "rate": 910, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Michoacán", "rate": 840, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Morelos", "rate": 850, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Nayarit", "rate": 580, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Nuevo León", "rate": 900, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Oaxaca", "rate": 760, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Puebla", "rate": 900, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Querétaro", "rate": 870, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Quintana Roo", "rate": 920, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "San Luis Potosí", "rate": 810, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Sinaloa", "rate": 830, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Sonora", "rate": 880, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Tabasco", "rate": 790, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Tamaulipas", "rate": 800, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Tlaxcala", "rate": 810, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Veracruz", "rate": 820, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Yucatán", "rate": 950, "note": "(Dato aproximado de Figura 5)" },
+        { "state": "Zacatecas", "rate": 800, "note": "(Dato aproximado de Figura 5)" }
+      ],
+      "by_state_avd_anxiety": [
+        { "state": "Aguascalientes", "rate": 590, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Baja California", "rate": 580, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Baja California Sur", "rate": 570, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Campeche", "rate": 560, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Chiapas", "rate": 530, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Chihuahua", "rate": 520, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Ciudad de México", "rate": 630, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Coahuila", "rate": 550, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Colima", "rate": 540, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Durango", "rate": 510, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Guanajuato", "rate": 500, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Guerrero", "rate": 490, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Hidalgo", "rate": 480, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Jalisco", "rate": 470, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Estado de México", "rate": 600, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Michoacán", "rate": 450, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Morelos", "rate": 440, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Nayarit", "rate": 550, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Nuevo León", "rate": 590, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Oaxaca", "rate": 430, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Puebla", "rate": 610, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Querétaro", "rate": 580, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Quintana Roo", "rate": 570, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "San Luis Potosí", "rate": 560, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Sinaloa", "rate": 550, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Sonora", "rate": 540, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Tabasco", "rate": 530, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Tamaulipas", "rate": 520, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Tlaxcala", "rate": 510, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Veracruz", "rate": 500, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Yucatán", "rate": 620, "note": "(Dato aproximado de Figura 6)" },
+        { "state": "Zacatecas", "rate": 490, "note": "(Dato aproximado de Figura 6)" }
+      ]
+    }
+}

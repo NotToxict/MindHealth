@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindHealth - Autoevaluación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- TensorFlow.js Scripts (versiones que SÍ existen) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.9.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@4.9.0/dist/tf-backend-wasm.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter@4.9.0/dist/tf-converter.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-tflite@0.0.1-alpha.8/dist/tf-tflite.min.js"></script>
+
+    <!-- MediaPipe Vision Tasks (versión corregida) -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.8/vision_bundle.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="custom-visibility.css">
+</head>
+<body>
+    <!-- Resto del HTML igual -->
+    <header id="app-header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm border-b border-slate-200">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-2xl font-bold text-primary">MindHealth</a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link">Inicio</a>
+                    <a href="self-assessment.html" class="nav-link active">Autodiagnóstico</a>
+                    <a href="history-dashboard.html" class="nav-link">Historial</a>
+                    <a href="status-dashboard.html" class="nav-link">Estado</a>
+                    <button id="logout-button" class="action-button-sm ml-4">Cerrar Sesión</button>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-slate-700 focus:outline-none p-2">
+                        <i id="mobile-menu-icon" class="fas fa-bars fa-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="mobile-menu-panel">
+            <a href="index.html" class="mobile-nav-link">Inicio</a>
+            <a href="self-assessment.html" class="mobile-nav-link active">Autodiagnóstico</a>
+            <a href="history-dashboard.html" class="mobile-nav-link">Historial</a>
+            <a href="status-dashboard.html" class="mobile-nav-link">Estado</a>
+            <button id="mobile-logout-button" class="mobile-nav-link w-full text-left">Cerrar Sesión</button>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section id="assessment-section" class="section-container bg-gray-50 min-h-screen flex items-center justify-center js-hide">
+            <div class="content-card max-w-4xl w-full mx-auto p-8 space-y-6">
+                <h3 class="text-xl font-semibold text-center text-slate-800">¡Bienvenido/a a tu Autoevaluación!</h3>
+                <p class="text-slate-600 text-center">Responde a las siguientes preguntas. La aplicación usará tu cámara para analizar tus expresiones faciales y registrar tus patrones emocionales.</p>
+
+                <div class="flex flex-col items-center space-y-4">
+                    <div class="relative w-full max-w-lg">
+                        <video id="webcam-feed" width="480" height="360" autoplay playsinline muted class="rounded-lg shadow-lg border border-gray-300 w-full transition-all duration-300"></video>
+                        <canvas id="face-drawing-canvas" class="absolute top-0 left-0 w-full h-full"></canvas>
+                        <p id="emotions-feedback" class="absolute bottom-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded js-hide"></p>
+                    </div>
+                    <p id="webcam-status" class="text-sm text-slate-500 text-center h-5">Inicializando...</p>
+                </div>
+
+                <div class="text-center mt-4">
+                    <p id="question-text" class="text-lg font-medium min-h-[5rem] flex items-center justify-center"></p>
+                    <textarea 
+                      id="question-answer"
+                      class="mt-4 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 text-base"
+                      rows="4"
+                      placeholder="Escribe tu respuesta aquí..."></textarea>
+                </div>
+
+                <div class="flex items-center justify-center space-x-4 mt-6">
+                    <button id="start-assessment-button" class="action-button opacity-50 cursor-not-allowed" disabled>Comenzar Evaluación</button>
+                    <button id="next-question-button" class="action-button js-hide">Siguiente Pregunta</button>
+                    <button id="end-assessment-button" class="secondary-button js-hide">Finalizar Evaluación</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-white pt-16 pb-12">
+    </footer>
+
+    <script type="module">
+        import { initializeSelfAssessment } from './ui-self-assessment.js';
+        
+        import { auth } from './firebase-config.js';
+        import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOM Content Loaded. Contenido del body actual:");
+            console.log(document.body.innerHTML); 
+
+            const assessmentSection = document.getElementById('assessment-section');
+
+            onAuthStateChanged(auth, async (user) => { 
+                if (user) {
+                    console.log("[App Init] Usuario autenticado, inicializando UI de autoevaluación...");
+                    assessmentSection.classList.remove('js-hide');
+                    // Retrasar ligeramente la inicialización para asegurar que tf.lite esté cargado
+                    await new Promise(resolve => setTimeout(resolve, 1000)); 
+                    initializeSelfAssessment(); 
+                } else {
+                    console.log("[App Init] Usuario no autenticado, redirigiendo a login.html.");
+                    window.location.href = 'login.html';
+                }
+            });
+
+            // --- Lógica de Menú y Logout (con verificaciones de null) ---
+            const logoutButton = document.getElementById('logout-button');
+            const mobileLogoutButton = document.getElementById('mobile-logout-button');
+            const handleLogout = async () => {
+                await signOut(auth);
+                window.location.href = 'login.html';
+            };
+            if (logoutButton) { 
+                logoutButton.addEventListener('click', handleLogout);
+            } else {
+                console.warn("Elemento 'logout-button' no encontrado.");
+            }
+            if (mobileLogoutButton) { 
+                mobileLogoutButton.addEventListener('click', handleLogout);
+            } else {
+                console.warn("Elemento 'mobile-logout-button' no encontrado.");
+            }
+            
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuButton) { 
+                mobileMenuButton.addEventListener('click', () => {
+                    if (mobileMenu) { 
+                        mobileMenu.classList.toggle('open');
+                    }
+                });
+            } else {
+                console.warn("Elemento 'mobile-menu-button' no encontrado.");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindHealth - Historial de Evaluaciones</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- AÑADIR ESTA LÍNEA PARA CARGAR CHART.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="custom-visibility.css">
+</head>
+
+<body class="antialiased bg-slate-100 text-slate-800">
+
+    <header id="app-header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm border-b border-slate-200">
+        <nav class="container mx-auto px-6 py-4" role="navigation" aria-label="Navegación principal">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-2xl font-bold text-primary">MindHealth</a>
+                <div class="hidden md:flex items-center space-x-8" id="desktop-nav">
+                    <a href="index.html" class="nav-link">Inicio</a>
+                    <a href="self-assessment.html" class="nav-link">Autodiagnóstico</a>
+                    <a href="history-dashboard.html" class="nav-link active">Historial</a>
+                    <button id="logout-button" class="action-button-sm ml-4">Cerrar Sesión</button>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-slate-700 focus:outline-none p-2">
+                        <i id="mobile-menu-icon" class="fas fa-bars fa-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="mobile-menu-panel">
+            <a href="index.html" class="mobile-nav-link">Inicio</a>
+            <a href="self-assessment.html" class="mobile-nav-link">Autodiagnóstico</a>
+            <a href="history-dashboard.html" class="mobile-nav-link active">Historial</a>
+            <button id="mobile-logout-button" class="mobile-nav-link w-full text-left">Cerrar Sesión</button>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="section-container bg-gray-50 min-h-screen">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h1 class="section-title">Tu Historial de Autoevaluaciones</h1>
+                    <p class="section-subtitle">Revisa el detalle de tus evaluaciones pasadas y observa tus patrones emocionales.</p>
+                </div>
+
+                <div id="history-wrapper" class="content-card max-w-4xl w-full mx-auto p-8 space-y-6">
+                    
+                    <div id="assessment-history-list-section">
+                        <h4 class="text-xl font-semibold text-slate-800 mb-4">Selecciona una evaluación para ver los detalles:</h4>
+                        <ul id="past-assessments-list" class="space-y-1 text-slate-700">
+                            <li class="p-2">Cargando...</li>
+                        </ul>
+                    </div>
+
+                    <div id="detailed-assessment-view" class="js-hide">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="text-xl font-semibold text-slate-800">Resultados de la evaluación <span id="assessment-date" class="font-normal text-base"></span></h4>
+                            <button id="close-detailed-view" class="secondary-button !px-4 !py-2">
+                                <i class="fas fa-arrow-left mr-2"></i> Volver a la lista
+                            </button>
+                        </div>
+                        <div id="detailed-results-content" class="space-y-4">
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-white pt-16 pb-12">
+       </footer>
+
+    <script type="module">
+        import { loadPastAssessmentsForCurrentUser, displayDetailedAssessment } from './ui-self-assessment.js';
+        import { auth } from './firebase-config.js';
+        import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const historyWrapper = document.getElementById('history-wrapper');
+            const listSection = document.getElementById('assessment-history-list-section');
+            const detailSection = document.getElementById('detailed-assessment-view');
+            const closeDetailedViewButton = document.getElementById('close-detailed-view');
+
+            // Asegurarse de que historyWrapper esté visible si hay usuario
+            if (historyWrapper) historyWrapper.classList.add('js-hide'); // Ocultar por defecto
+            if (detailSection) detailSection.classList.add('js-hide'); // Ocultar detalles por defecto
+            if (listSection) listSection.classList.remove('js-hide'); // Mostrar lista por defecto
+
+            if (closeDetailedViewButton) {
+                closeDetailedViewButton.addEventListener('click', () => {
+                    if (detailSection) detailSection.classList.add('js-hide');
+                    if (listSection) listSection.classList.remove('js-hide');
+                });
+            }
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    if (historyWrapper) historyWrapper.classList.remove('js-hide'); // Mostrar el wrapper principal
+                    loadPastAssessmentsForCurrentUser(user.uid);
+                } else {
+                    window.location.href = 'login.html';
+                }
+            });
+
+            const logoutButton = document.getElementById('logout-button');
+            const mobileLogoutButton = document.getElementById('mobile-logout-button');
+            const handleLogout = async () => {
+                await signOut(auth);
+                window.location.href = 'login.html';
+            };
+            if (logoutButton) logoutButton.addEventListener('click', handleLogout);
+            if (mobileLogoutButton) mobileLogoutButton.addEventListener('click', handleLogout);
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuButton) mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+            // Lógica para el botón back-to-top (si existe en esta página)
+            const backToTopButton = document.getElementById('back-to-top');
+            if (backToTopButton) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 400) { backToTopButton.classList.add('show'); } 
+                    else { backToTopButton.classList.remove('show'); }
+                });
+                backToTopButton.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+            }
+        });
+    </script>
+</body>
+</html>

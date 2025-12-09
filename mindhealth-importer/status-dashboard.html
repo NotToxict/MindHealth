@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MindHealth | Mi Estado</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- NUEVO: Estilos de la barra iOS/Samsung -->
+  <link rel="stylesheet" href="./statusbar.css" />
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <header class="bg-white border-b border-slate-200">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+      <h1 class="text-xl font-semibold">MindHealth</h1>
+      <nav class="flex items-center gap-4">
+        <a href="self-assessment.html" class="text-sm text-slate-600 hover:text-slate-900">Autoevaluación</a>
+        <a href="history-dashboard.html" class="text-sm text-slate-600 hover:text-slate-900">Historial</a>
+        <span class="inline-flex items-center gap-2 text-sm font-medium text-blue-700">
+          <span class="inline-block w-2 h-2 rounded-full bg-blue-600"></span>
+          Mi estado
+        </span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-6">
+    <!-- NUEVO: Barra de estado estilo iOS/Samsung -->
+    <section class="mb-6">
+      <div class="ios-statusbar" id="emotion-statusbar" aria-label="Barra de estado emocional">
+        <div class="ios-statusbar__track" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="ios-statusbar__fill" id="statusbar-fill"></div>
+        </div>
+        <div class="ios-statusbar__face face" id="statusbar-face" data-emotion="neutral" aria-label="Estado: Neutral" title="Estado actual"></div>
+        <div class="ios-statusbar__labels" aria-hidden="true">
+          <span>Bajo</span><span>Medio</span><span>Alto</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <p id="welcome-user" class="text-sm text-slate-500">Cargando usuario...</p>
+          <h2 class="text-2xl font-semibold mt-1">Resumen de tu estado</h2>
+          <p class="text-sm text-slate-500">Basado en tus autoevaluaciones recientes (emociones y texto).</p>
+        </div>
+        <div id="status-badge" class="px-3 py-1 rounded-full text-sm font-medium bg-slate-200 text-slate-700">Calculando...</div>
+      </div>
+    </section>
+
+    <section id="no-data" class="hidden">
+      <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-md text-yellow-800">
+        Aún no hay suficientes datos. Realiza al menos una autoevaluación para ver tu estado.
+      </div>
+    </section>
+
+    <section id="status-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div class="p-4 bg-white rounded-lg border border-slate-200">
+        <h3 class="font-semibold">Depresión</h3>
+        <p id="score-depresion" class="text-2xl font-bold mt-2">–</p>
+        <div class="w-full bg-slate-100 h-2 rounded mt-2">
+          <div id="bar-depresion" class="h-2 rounded bg-slate-400" style="width:0%"></div>
+        </div>
+        <p id="lvl-depresion" class="text-sm text-slate-500 mt-2">–</p>
+      </div>
+      <div class="p-4 bg-white rounded-lg border border-slate-200">
+        <h3 class="font-semibold">Ansiedad</h3>
+        <p id="score-ansiedad" class="text-2xl font-bold mt-2">–</p>
+        <div class="w-full bg-slate-100 h-2 rounded mt-2">
+          <div id="bar-ansiedad" class="h-2 rounded bg-slate-400" style="width:0%"></div>
+        </div>
+        <p id="lvl-ansiedad" class="text-sm text-slate-500 mt-2">–</p>
+      </div>
+      <div class="p-4 bg-white rounded-lg border border-slate-200">
+        <h3 class="font-semibold">Estrés</h3>
+        <p id="score-estres" class="text-2xl font-bold mt-2">–</p>
+        <div class="w-full bg-slate-100 h-2 rounded mt-2">
+          <div id="bar-estres" class="h-2 rounded bg-slate-400" style="width:0%"></div>
+        </div>
+        <p id="lvl-estres" class="text-sm text-slate-500 mt-2">–</p>
+      </div>
+      <div class="p-4 bg-white rounded-lg border border-slate-200">
+        <h3 class="font-semibold">Ira / Irritabilidad</h3>
+        <p id="score-ira" class="text-2xl font-bold mt-2">–</p>
+        <div class="w-full bg-slate-100 h-2 rounded mt-2">
+          <div id="bar-ira" class="h-2 rounded bg-slate-400" style="width:0%"></div>
+        </div>
+        <p id="lvl-ira" class="text-sm text-slate-500 mt-2">–</p>
+      </div>
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="p-4 bg-white rounded-lg border border-slate-200">
+        <h3 class="font-semibold">Tendencia reciente</h3>
+        <p class="text-sm text-slate-500">Índice negativo (promedio de tristeza, miedo, asco, ira) por evaluación</p>
+        <div class="mt-4 h-64">
+          <canvas id="trend-chart"></canvas>
+        </div>
+      </div>
+      <div class="p-4 bg-white rounded-lg border border-slate-200">
+        <h3 class="font-semibold">Recomendaciones</h3>
+        <ul id="recommendations" class="list-disc list-inside text-sm text-slate-700 mt-2 space-y-1">
+          <li>Analizando tus datos para sugerencias personalizadas...</li>
+        </ul>
+        <p class="text-xs text-slate-400 mt-4">
+          Nota: Este análisis no es un diagnóstico médico. Si estás en crisis o piensas que podrías hacerte daño,
+          busca ayuda profesional inmediata o comunícate con líneas de apoyo de tu país.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./firebase-config.js"></script>
+  <script type="module" src="./ui-status-dashboard.js"></script>
+</body>
+</html>

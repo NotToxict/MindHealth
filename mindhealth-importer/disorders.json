@@ -1,0 +1,138 @@
+[
+    {
+      "id": "trastorno_depresivo_mayor",
+      "name": "Trastorno Depresivo Mayor (TDM)",
+      "category": "Trastorno del Estado de Ánimo",
+      "description_short": "Se caracteriza por un estado de ánimo deprimido la mayor parte del día y/o una marcada disminución del interés o placer en casi todas las actividades (anhedonia).",
+      "diagnostic_criteria_dsm5": {
+        "summary": "Presencia de 5 o más de los siguientes síntomas durante un período de 2 semanas, representando un cambio del funcionamiento previo; al menos uno de los síntomas es (1) estado de ánimo deprimido o (2) pérdida de interés o placer.",
+        "symptoms": [
+          "Estado de ánimo deprimido", "Anhedonia (disminución del interés o placer)", "Cambios significativos de peso o apetito", "Insomnio o hipersomnia", "Agitación o retraso psicomotor", "Fatiga o pérdida de energía", "Sentimientos de inutilidad o culpa excesiva", "Disminución de la capacidad para pensar o concentrarse", "Pensamientos recurrentes de muerte o ideación suicida"
+        ]
+      },
+      "prevalence_data": {
+        "global": { "source": "OMS, 2021", "total_affected_2019_millions": 280, "adults_percentage": 5, "gender_note": "Afecta más a mujeres que a hombres.", "children_adolescents_affected_2019_millions": 23 }
+      },
+      "facial_correlates": {
+        "summary": "Potencial reducción de expresiones faciales positivas y aumento de las negativas. En casos severos, puede presentarse afecto embotado.",
+        "associated_aus": { "increased_activity": ["AU1", "AU4", "AU15"], "decreased_activity": ["AU12"] }
+      },
+      "associated_risks": {
+        "life_expectancy_reduction_years_range": "7-11 (para depresión recurrente severa)",
+        "suicide_risk_level": "Elevado. Es un factor de riesgo principal para el suicidio.",
+        "disability_global_rank_2019": "Segunda causa principal de discapacidad a nivel mundial."
+      },
+      "common_comorbidities": [ "Trastornos de Ansiedad", "Trastornos de la Conducta Alimentaria", "TOC", "Trastornos por uso de sustancias" ]
+    },
+    {
+      "id": "trastorno_ansiedad",
+      "name": "Trastornos de Ansiedad",
+      "category": "Trastorno de Ansiedad",
+      "description_short": "Se definen por una preocupación y miedo excesivos, tensión muscular y evitación de situaciones temidas. Incluye el Trastorno de Ansiedad Generalizada (TAG) y la Fobia Social.",
+      "diagnostic_criteria_dsm5": {
+        "summary": "Para TAG: Preocupación excesiva sobre múltiples eventos, la mayor parte de los días durante al menos 6 meses, acompañada de síntomas como inquietud, fatiga, dificultad para concentrarse, irritabilidad, tensión muscular y alteraciones del sueño.",
+        "symptoms": [ "Preocupación excesiva y difícil de controlar", "Inquietud o nerviosismo", "Fatiga fácil", "Dificultad para concentrarse", "Irritabilidad", "Tensión muscular", "Problemas de sueño" ]
+      },
+      "prevalence_data": {
+        "global": { "source": "OMS, 2019", "total_affected_2019_millions": 301, "global_percentage": 4, "children_adolescents_affected_2019_millions": 58 }
+      },
+      "facial_correlates": {
+        "summary": "Músculos faciales a menudo tensos, ceño fruncido y posibles expresiones de miedo. Personas con ansiedad social pueden mostrar patrones de mirada alterados.",
+        "associated_aus": { "increased_activity": ["AU4", "AU5", "AU7"], "decreased_activity": [] }
+      },
+      "associated_risks": {
+        "life_expectancy_reduction_years_range": "10-20 (para trastornos graves en general)",
+        "suicide_risk_level": "Factor de riesgo importante para el suicidio.",
+        "disability_global_rank_2019": "Octava causa principal de discapacidad a nivel mundial."
+      },
+      "common_comorbidities": [ "Trastornos Depresivos", "Trastornos por uso de sustancias" ]
+    },
+    {
+      "id": "trastorno_bipolar",
+      "name": "Trastorno Bipolar",
+      "category": "Trastorno del Estado de Ánimo",
+      "description_short": "Caracterizado por cambios extremos en el estado de ánimo que van desde altos maníacos (euforia, irritabilidad) hasta bajos depresivos.",
+      "diagnostic_criteria_dsm5": {
+        "summary": "Presencia de episodios maníacos o hipomaníacos, que pueden alternar con episodios depresivos mayores.",
+        "symptoms": ["Autoestima exagerada o grandiosidad", "Disminución de la necesidad de dormir", "Más hablador de lo habitual", "Fuga de ideas o pensamiento acelerado", "Facilidad de distracción", "Aumento de la actividad dirigida a un objetivo"]
+      },
+      "prevalence_data": {
+        "global": { "source": "OMS, 2019", "total_affected_2019_millions": 40 }
+      },
+      "facial_correlates": {
+        "summary": "Las expresiones varían drásticamente con el estado de ánimo. En episodios depresivos, similar a TDM. En episodios maníacos, las expresiones pueden ser mucho más animadas e intensas.",
+        "associated_aus": { "increased_activity": [], "decreased_activity": [] }
+      },
+      "associated_risks": {
+        "life_expectancy_reduction_years_range": "9-20",
+        "suicide_risk_level": "Muy elevado, uno de los más altos entre los trastornos psiquiátricos."
+      },
+      "common_comorbidities": ["Trastornos de Ansiedad", "TDAH", "Trastornos por uso de sustancias"]
+    },
+    {
+      "id": "espectro_esquizofrenia",
+      "name": "Espectro de la Esquizofrenia",
+      "category": "Trastorno Psicótico",
+      "description_short": "Trastorno grave que afecta la forma en que una persona piensa, siente y se comporta. Se caracteriza por pensamientos o experiencias que están fuera de la realidad (psicosis).",
+      "diagnostic_criteria_dsm5": {
+        "summary": "Presencia de dos o más de los siguientes síntomas: delirios, alucinaciones, discurso desorganizado, comportamiento muy desorganizado y síntomas negativos.",
+        "symptoms": ["Delirios", "Alucinaciones", "Discurso desorganizado", "Comportamiento muy desorganizado o catatónico", "Síntomas negativos (expresión emocional disminuida, abulia)"]
+      },
+      "prevalence_data": {
+        "global": { "source": "OMS", "total_affected_millions": 24, "ratio": "1 de cada 300 personas (0.32%)" }
+      },
+      "facial_correlates": {
+        "summary": "Un síntoma negativo característico es el 'afecto aplanado' o 'embotado', que es una reducción significativa en la intensidad de la expresión emocional en el rostro.",
+        "associated_aus": { "increased_activity": [], "decreased_activity": ["AU6", "AU12 (expresiones positivas)"] }
+      },
+      "associated_risks": {
+        "life_expectancy_reduction_years_range": "10-20",
+        "suicide_risk_level": "Elevado."
+      },
+      "common_comorbidities": ["Trastornos por uso de sustancias", "Trastornos de ansiedad"]
+    },
+    {
+      "id": "trastorno_estres_postraumatico",
+      "name": "Trastorno de Estrés Postraumático (TEPT)",
+      "category": "Trastorno Relacionado con Trauma",
+      "description_short": "Afección que puede ocurrir en personas que han experimentado o presenciado un evento traumático, aterrador o peligroso.",
+      "diagnostic_criteria_dsm5": {
+        "summary": "Exposición a un trauma, seguido de síntomas de intrusión, evitación, alteraciones negativas en cogniciones/ánimo y alteraciones marcadas en la activación y reactividad.",
+        "symptoms": ["Recuerdos angustiosos recurrentes (flashbacks)", "Sueños angustiosos (pesadillas)", "Evitación de recordatorios del trauma", "Sentimientos de desapego", "Hipervigilancia y sobresalto exagerado", "Irritabilidad y arrebatos de furia"]
+      },
+      "prevalence_data": {
+        "global": { "source": "OMS", "last_year_percentage": 3.6 }
+      },
+      "facial_correlates": {
+        "summary": "Pueden mostrar expresiones de miedo, ira o vergüenza. La hipervigilancia puede manifestarse en movimientos oculares y alerta facial. También puede presentarse embotamiento emocional.",
+        "associated_aus": { "increased_activity": ["AU1", "AU2", "AU4", "AU5", "AU7"], "decreased_activity": [] }
+      },
+      "associated_risks": {
+        "life_expectancy_reduction_years_range": "Variable, a menudo ligado a comorbilidades.",
+        "suicide_risk_level": "Elevado."
+      },
+      "common_comorbidities": ["Trastornos depresivos", "Trastornos de ansiedad", "Trastornos por uso de sustancias"]
+    },
+    {
+      "id": "trastornos_conducta_alimentaria",
+      "name": "Trastornos de la Conducta Alimentaria",
+      "category": "Trastorno Alimentario",
+      "description_short": "Enfermedades caracterizadas por comportamientos alimentarios anormales graves y la preocupación por el peso y la forma del cuerpo. Incluye la Anorexia y la Bulimia.",
+      "diagnostic_criteria_dsm5": {
+        "summary": "Para Anorexia Nerviosa: Restricción de la ingesta energética que conduce a un peso corporal significativamente bajo, miedo intenso a ganar peso y una alteración en la autopercepción.",
+        "symptoms": ["Restricción persistente de la ingesta de alimentos", "Miedo intenso a engordar", "Alteración de la autopercepción del peso", "(En Bulimia) Episodios recurrentes de atracones y purgas"]
+      },
+      "prevalence_data": {
+        "global": { "source": "Estimaciones generales", "general_population_percentage": 2.4, "anorexia_women_percentage": "0.67-1.2%", "bulimia_adolescents_percentage": "1-3%" }
+      },
+      "facial_correlates": {
+        "summary": "Las expresiones pueden reflejar una intensa angustia, ansiedad o culpa, especialmente en relación con la comida o la imagen corporal.",
+        "associated_aus": { "increased_activity": ["AU9", "AU10 (Asco)"], "decreased_activity": [] }
+      },
+      "associated_risks": {
+        "life_expectancy_reduction_years_range": "Significativo, la anorexia tiene una de las tasas de mortalidad más altas de todos los trastornos psiquiátricos.",
+        "suicide_risk_level": "Elevado."
+      },
+      "common_comorbidities": ["Trastornos depresivos", "Trastornos de ansiedad", "TOC", "Trastornos de la personalidad"]
+    }
+]
